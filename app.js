@@ -36,7 +36,27 @@ app.get('/app', function (req, res) {
     res.render('index.html');
 });
 
-app.post('/app/:id', function (req, res) {
+app.get('/list/:from', function (req, res) {
+
+});
+
+app.get('/delete/:file/:from', function (req, res) {
+
+});
+
+app.get('/download/:file/:from', function (req, res) {
+
+});
+
+app.post('/upload/:to', function (req, res) {
+
+});
+
+app.get('/move/:file/:from/:to', function (req, res) {
     //console.log(req.params);
     //console.log(req.query);
+});
+
+app.get('/oauth/:service', function (req, res) {
+    
 });

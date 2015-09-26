@@ -1,14 +1,23 @@
-// Stuff shamelessly copied from the google drive api reference
+/**
+ * Code for interacting and authorizing with Google Drive
+ *
+ * A lot of this code is shamelessly ripped from
+ * https://developers.google.com/drive/v2/reference/
+ */
 
 var fs = require('fs');
 var readline = require('readline');
 var google = require('googleapis');
 var googleAuth = require('google-auth-library');
 
-var SCOPES = ['https://www.googleapis.com/auth/drive.metadata.readonly'];
+var SCOPES = ['https://www.googleapis.com/auth/drive'];
 var TOKEN_DIR = (process.env.HOME || process.env.HOMEPATH ||
     process.env.USERPROFILE) + '/.credentials/';
 var TOKEN_PATH = TOKEN_DIR + 'drive-nodejs-quickstart.json';
+
+/**
+ * Code for authorization
+ */
 
 // Load client secrets from a local file.
 fs.readFile('client_secret.json', function processClientSecrets(err, content) {
@@ -16,8 +25,7 @@ fs.readFile('client_secret.json', function processClientSecrets(err, content) {
     console.log('Error loading client secret file: ' + err);
     return;
   }
-  // Authorize a client with the loaded credentials, then call the
-  // Drive API.
+  // Authorize a client with the loaded credentials, then callback.
   authorize(JSON.parse(content), function () {
     console.log('done authorizing');
   });
@@ -59,7 +67,8 @@ function authorize(credentials, callback) {
 function getNewToken(oauth2Client, callback) {
   var authUrl = oauth2Client.generateAuthUrl({
     access_type: 'offline',
-    scope: SCOPES
+    scope: SCOPES,
+    redirect_uri: 'http://localhost:3000/oauth/googledrive',
   });
   console.log('Authorize this app by visiting this url: ', authUrl);
   var rl = readline.createInterface({
@@ -81,47 +90,47 @@ function getNewToken(oauth2Client, callback) {
 }
 
 /**
- * Store token to disk be used in later program executions.
- *
- * @param {Object} token The token to store to disk.
+ * Backend API definitions
  */
-function storeToken(token) {
-  try {
-    fs.mkdirSync(TOKEN_DIR);
-  } catch (err) {
-    if (err.code != 'EEXIST') {
-      throw err;
-    }
-  }
-  fs.writeFile(TOKEN_PATH, JSON.stringify(token));
-  console.log('Token stored to ' + TOKEN_PATH);
-}
 
 /**
- * Lists the names and IDs of up to 10 files.
- *
- * @param {google.auth.OAuth2} auth An authorized OAuth2 client.
+ * List files
  */
-function listFiles(auth) {
-  var service = google.drive('v2');
-  service.files.list({
-    auth: auth,
-    maxResults: 10,
-  }, function(err, response) {
-    if (err) {
-      console.log('The API returned an error: ' + err);
-      return;
-    }
-    var files = response.items;
-    if (files.length == 0) {
-      console.log('No files found.');
-    } else {
-      console.log('Files:');
-      for (var i = 0; i < files.length; i++) {
-        var file = files[i];
-        console.log('%s (%s)', file.title, file.id);
-      }
-    }
-  });
+function listFiles (token) {
+
 }
 
+exports.listFiles = listFiles;
+
+/**
+ * Delete from GD
+ */
+function deleteFile (token, filename) {
+
+    if (logged in) {
+
+    } else {
+        <login>
+    }
+
+}
+
+exports.deleteFile = deleteFile;
+
+/**
+ * Download a file
+ */
+function downloadFile (token, filename) {
+
+}
+
+exports.downloadFile = downloadFile;
+
+/**
+ * Upload a file
+ */
+function uploadFile (token, filename, filedata) {
+
+}
+
+exports.uploadFile = uploadFile;
