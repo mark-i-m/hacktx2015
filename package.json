@@ -1,24 +1,9 @@
 {
-  "name": "hacktx2015",
-  "version": "0.0.0",
-  "description": "HackTX 2015 project",
-  "main": "index.js",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
-  "repository": {
-    "type": "git",
-    "url": "git://github.com/mark-i-m/hacktx2015.git"
-  },
-  "keywords": [
-    "hacktx"
-  ],
-  "author": "",
-  "license": "BSD-2-Clause",
-  "bugs": {
-    "url": "https://github.com/mark-i-m/hacktx2015/issues"
-  },
-  "dependencies": {
-    "express": "~4.13.3"
+    "name": "application-name"
+  , "version": "0.0.1"
+  , "private": true
+  , "dependencies": {
+      "express": "2.5.8"
+    , "jade": ">= 0.0.1"
   }
 }
