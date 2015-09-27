@@ -11,6 +11,10 @@ var gdrive = require('./googledrive.js');
 var dbox = require('./dropbox.js');
 
 // Database
+var MongoClient = require('mongodb').MongoClient;
+MongoClient.connect('mongodb://127.0.0.1:27017/test', function(err, db) {
+  if(err) throw err;
+});
 var db = require('./db.js');
 
 /**
@@ -59,7 +63,7 @@ app.post('/session_token/:token/:user/:service', function (req, res) {
 app.get('/list/:service/:user', function (req, res) {
     if (req.params.service == 'googledrive') {
         console.log('List from google drive');
-        db.getToken(req.params.user, gdrive.listFiles, res);
+        db.getToken(req.params.user, req.params.service, gdrive.listFiles, res);
     }
     else if(req.params.service == 'dropbox') {
         console.log('List from DropBox');
