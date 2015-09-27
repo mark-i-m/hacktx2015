@@ -27,7 +27,7 @@ function getOAuth2FromToken(token) {
 /**
  * List files
  */
-function listFiles (token) {
+exports.listFiles = function (res, token) {
     var oauth2Client = getOAuth2FromToken(token);
     // get all files using the token
     var service = google.drive('v2');
@@ -39,19 +39,9 @@ function listFiles (token) {
             return;
         }
         var files = response.items;
-        if (files.length == 0) {
-            console.log('No files found.');
-        } else {
-            console.log('Files:');
-            for (var i = 0; i < files.length; i++) {
-                var file = files[i];
-                console.log(file);
-            }
-        }
+        res.send(JSON.stringify(files));
     });
 }
-
-exports.listFiles = listFiles;
 
 /**
  * Delete from GD

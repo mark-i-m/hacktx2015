@@ -53,7 +53,7 @@ app.post('/session_token/:token/:user/:service', function (req, res) {
 app.get('/list/:service/:user', function (req, res) {
     if (req.params.service == 'googledrive') {
         console.log('List from google drive');
-        gdrive.listFiles(req.params.user);
+        db.getToken(req.params.user, gdrive.listFiles, res);
     }
 });
 
