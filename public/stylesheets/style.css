@@ -1,8 +1,170 @@
+@font-face {
+    font-family: Gotham;
+    src: url(Gotham-Medium.otf);
+    font-weight: bold;
+}
+
 body {
   padding: 50px;
   font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
 }
 
-a {
-  color: #00B7FF;
+.logo {
+	height: 50px;
+	width: 50px;
+	background: #000;
+	position: absolute;
+	top: 50px;
+	left: 50%;
+	transform: translateX(-50%);
+	-webkit-transform: translateX(-50%);
+	-moz-transform: translateX(-50%);
+	border-radius: 100%;
+	z-index: 10;
+}
+
+.new {
+	height: 50px;
+	width: 50px;
+	right: 2.5%;
+	top: 50px;
+	/*background: #000;*/
+	position: absolute;
+	border-radius: 100%;
+	cursor: pointer;
+	line-height: 45px;
+	color: #2F3132;
+	font-size: 33px;
+	font-weight: bold;
+	text-align: center;
+	transform: translateX(-50%);
+	-webkit-transform: translateX(-50%);
+	-moz-transform: translateX(-50%);
+	z-index: 10;
+}
+
+.box > .background {
+	height: 100%;
+	width: 100%;
+	position: fixed;
+	top: 0;
+	left: 0;
+	z-index: 1;
+}
+
+.box {
+	/*width: 80%;*/
+	width: 100%;
+    /*top: 150px;
+    left: 50%;*/
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100%;
+    /*-webkit-transform: translate(-50%,0);
+    -ms-transform: translate(-50%,0);
+    transform: translate(-50%,0);*/
+}
+
+.box .container {
+	width: 100%;
+    position: absolute;
+    /*top: 150px;
+    left: 50%;*/
+    padding: 10%;
+    padding-top: 150px;
+    top: 0;
+    left: 0;
+    height: 100%;
+    overflow: scroll;
+    box-sizing: border-box;
+    z-index: 2;
+}
+
+.drives {
+	position: relative;
+	width: 100%;
+	padding: 10%;
+	padding-top: 150px;
+    top: 0;
+    left: 0;
+    box-sizing: border-box;
+    z-index: 1
+}
+
+/*.drives {
+	position: absolute;
+	height: 100%;
+	width: 100%;
+}*/
+
+.item, .drive {
+	height: 300px;
+	width: 25%;
+	position: relative;
+	float: left;
+	cursor: pointer;
+	opacity: 0;
+	padding: 0;
+}
+
+.item .background {
+	opacity: .2;
+	background: #000;
+	height: 100%;
+	width: 100%;
+	position: absolute;
+}
+
+.drive a{
+	height: 100%;
+	width: 100%;
+ 	position: absolute;
+}
+
+
+.grid {
+	z-index: 2;
+	position: relative;
+}
+
+.drive {
+	width: 33.33%;
+}
+
+.icon {
+	height: 50%;
+	width: 50%;
+	position: absolute;
+	top: 25%;
+	left: 25%;
+	opacity: 0;
+} 
+
+.title {
+	position: absolute;
+	color: #F7F7F7;
+	font-family: Gotham;
+	font-size: 24px;
+	z-index: 10;
+	text-align: center;
+	bottom: 10%;
+	left: 10%;
+	opacity: 0;
+}
+
+@media only screen and (max-width: 1024px), only screen and (max-width: 1024px) and (-webkit-min-device-pixel-ratio: 3){
+	.item {
+	    width: 33.333333%;
+	}
+}
+@media only screen and (max-width: 920px), only screen and (max-width: 920px) and (-webkit-min-device-pixel-ratio: 3){
+	.item, .drive {
+	    width: 50%;
+	}
+}
+@media only screen and (max-width: 667px), only screen and (max-width: 667px) and (-webkit-min-device-pixel-ratio: 3) {
+	.item, .drive {
+	    width: 100%;
+	}
 }
