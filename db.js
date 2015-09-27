@@ -6,3 +6,8 @@
 exports.saveTokenTriple = function (t, u, s) {
     console.log(t,u,s);
 };
+
+exports.getToken = function (user, callback, res) {
+    var token = ''; // TODO
+    callback(res, token);
+};
