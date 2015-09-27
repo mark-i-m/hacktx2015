@@ -10,88 +10,86 @@ var readline = require('readline');
 var google = require('googleapis');
 var googleAuth = require('google-auth-library');
 
-var SCOPES = ['https://www.googleapis.com/auth/drive'];
-var TOKEN_DIR = (process.env.HOME || process.env.HOMEPATH ||
-    process.env.USERPROFILE) + '/.credentials/';
-var TOKEN_PATH = TOKEN_DIR + 'drive-nodejs-quickstart.json';
+var SCOPES = ['https://www.googleapis.com/auth/drive','https://www.googleapis.com/auth/userinfo.email'];
+var CLIENT_SECRET = null;
 
 /**
  * Code for authorization
  */
 
-// Load client secrets from a local file.
-fs.readFile('client_secret.json', function processClientSecrets(err, content) {
-  if (err) {
-    console.log('Error loading client secret file: ' + err);
-    return;
-  }
-  // Authorize a client with the loaded credentials, then callback.
-  authorize(JSON.parse(content), function () {
-    console.log('done authorizing');
-  });
-});
-
 /**
- * Create an OAuth2 client with the given credentials, and then execute the
- * given callback function.
- *
- * @param {Object} credentials The authorization client credentials.
- * @param {function} callback The callback to call with the authorized client.
+ * Load client secrets from a local file, then call authorize()
  */
-function authorize(credentials, callback) {
-  var clientSecret = credentials.installed.client_secret;
-  var clientId = credentials.installed.client_id;
-  var redirectUrl = credentials.installed.redirect_uris[0];
-  var auth = new googleAuth();
-  var oauth2Client = new auth.OAuth2(clientId, clientSecret, redirectUrl);
+function readClientSecret () {
+    fs.readFile('client_secret_googledrive.json', function (err, content) {
+        if (err) {
+            console.log('Error loading client secret file: ' + err);
+            return;
+        }
+        // Store the client secret
+        CLIENT_SECRET = JSON.parse(content);
 
-  // Check if we have previously stored a token.
-  fs.readFile(TOKEN_PATH, function(err, token) {
-    if (err) {
-      getNewToken(oauth2Client, callback);
-    } else {
-      oauth2Client.credentials = JSON.parse(token);
-      callback(oauth2Client);
-    }
-  });
+        console.log('Loaded client secret :)');
+
+    authorize();
+    });
+}
+
+function getOAuth2Client () {
+  var clientSecret = CLIENT_SECRET.installed.client_secret;
+  var clientId = CLIENT_SECRET.installed.client_id;
+  var redirectUrl = 'http://localhost:3000/oauth/googledrive';
+  var auth = new googleAuth();
+  return new auth.OAuth2(clientId, clientSecret, redirectUrl);
 }
 
 /**
- * Get and store new token after prompting for user authorization, and then
- * execute the given callback with the authorized OAuth2 client.
+ * Create an OAuth2 client with the given credentials.
  *
- * @param {google.auth.OAuth2} oauth2Client The OAuth2 client to get token for.
- * @param {getEventsCallback} callback The callback to call with the authorized
- *     client.
+ * @param res the response
  */
-function getNewToken(oauth2Client, callback) {
+function authorize(res) {
+  var oauth2Client = getOAuth2Client();
   var authUrl = oauth2Client.generateAuthUrl({
     access_type: 'offline',
     scope: SCOPES,
-    redirect_uri: 'http://localhost:3000/oauth/googledrive',
   });
-  console.log('Authorize this app by visiting this url: ', authUrl);
-  var rl = readline.createInterface({
-    input: process.stdin,
-    output: process.stdout
-  });
-  rl.question('Enter the code from that page here: ', function(code) {
-    rl.close();
+  res.redirect(authUrl);
+}
+
+/**
+ * Backend API definitions
+ */
+
+/**
+ * Login and get OAuth2 token
+ */
+function login (res) {
+    if (!CLIENT_SECRET) {
+        readClientSecret(res);
+    } else {
+        authorize(res)
+    }
+}
+
+exports.login = login;
+
+/**
+ * Get token from authorization code
+ */
+function getToken (res, code) {
+    var oauth2Client = getOAuth2Client();
     oauth2Client.getToken(code, function(err, token) {
       if (err) {
         console.log('Error while trying to retrieve access token', err);
         return;
       }
       oauth2Client.credentials = token;
-      storeToken(token);
-      callback(oauth2Client);
+      res.cookie('', token, {maxAge: 1e10,}); //TODO
     });
-  });
 }
 
-/**
- * Backend API definitions
- */
+exports.getToken = getToken;
 
 /**
  * List files
