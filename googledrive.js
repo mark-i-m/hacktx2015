@@ -20,7 +20,7 @@ var CLIENT_SECRET = null;
 /**
  * Load client secrets from a local file, then call authorize()
  */
-function readClientSecret () {
+function readClientSecret (res) {
     fs.readFile('client_secret_googledrive.json', function (err, content) {
         if (err) {
             console.log('Error loading client secret file: ' + err);
@@ -31,7 +31,7 @@ function readClientSecret () {
 
         console.log('Loaded client secret :)');
 
-    authorize();
+    authorize(res);
     });
 }
 
@@ -55,6 +55,24 @@ function authorize(res) {
     scope: SCOPES,
   });
   res.redirect(authUrl);
+}
+
+/**
+ * Get the email address and set a cookie
+ * Then, send the user to main page.
+ */
+function setCookie(res, oauth) {
+    var service = google.oauth2.userinfo.v2.me.get({
+        auth: oauth,
+    }, function (err, result) {
+        if (err || !result.email) {
+            console.log('Error while trying to retrieve email', err, result);
+            return;
+        }
+        console.log('Setting cookie for user %s with token %s', result.email, oauth.token);
+        res.cookie('googledrive-' + result.email, token, {maxAge: 1e10,});
+        res.redirect('/app');
+    });
 }
 
 /**
@@ -84,8 +102,7 @@ function getToken (res, code) {
         console.log('Error while trying to retrieve access token', err);
         return;
       }
-      oauth2Client.credentials = token;
-      res.cookie('', token, {maxAge: 1e10,}); //TODO
+      setCookie(res, oauth2Client);
     });
 }
 
@@ -105,11 +122,11 @@ exports.listFiles = listFiles;
  */
 function deleteFile (token, filename) {
 
-    if (logged in) {
+    //if (logged in) {
 
-    } else {
-        <login>
-    }
+    //} else {
+    //    <login>
+    //}
 
 }
 

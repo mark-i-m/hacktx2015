@@ -37,11 +37,17 @@ app.get('/app', function (req, res) {
 });
 
 app.get('/login/:to', function (req, res) {
-
+    if (req.params.to == 'googledrive') {
+        console.log('Login to google drive');
+        gdrive.login(res);
+    }
 });
 
 app.get('/oauth/:service', function (req, res) {
-
+    if (req.params.service == 'googledrive') {
+        console.log('Received OAuth2 response with code ', req.query.code);
+        gdrive.getToken(req.query.code);
+    }
 });
 
 app.get('/list/:from', function (req, res) {
