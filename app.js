@@ -43,6 +43,11 @@ app.get('/login/:to', function (req, res) {
     }
 });
 
+app.post('/session_token/:token/:user/:service', function (req, res) {
+    console.log(req.params.token, req.params.user, req.params.service);
+    gdrive.test(req.params.token, req.params.user);
+});
+
 app.get('/list/:from', function (req, res) {
 
 });
@@ -62,8 +67,4 @@ app.post('/upload/:to', function (req, res) {
 app.get('/move/:file/:from/:to', function (req, res) {
     //console.log(req.params);
     //console.log(req.query);
-});
-
-app.post('/session_token/:token/:user/:service', function (req, res) {
-    console.log(req.params.token, req.params.user, req.params.service);
 });
