@@ -10,6 +10,9 @@ var app = module.exports = express.createServer();
 var gdrive = require('./googledrive.js');
 var dbox = require('./dropbox.js');
 
+// Database
+var db = require('./db.js');
+
 /**
  * Configuration
  */
@@ -43,27 +46,29 @@ app.get('/login/:to', function (req, res) {
     }
 });
 
-app.get('/list/:from', function (req, res) {
-
-});
-
-app.get('/delete/:file/:from', function (req, res) {
-
-});
-
-app.get('/download/:file/:from', function (req, res) {
-
-});
-
-app.post('/upload/:to', function (req, res) {
-
-});
-
-app.get('/move/:file/:from/:to', function (req, res) {
-    //console.log(req.params);
-    //console.log(req.query);
-});
-
 app.post('/session_token/:token/:user/:service', function (req, res) {
-    console.log(req.params.token, req.params.user, req.params.service);
+    db.saveTokenTriple(req.params.token, req.params.user, req.params.service);
+});
+
+app.get('/list/:service/:user', function (req, res) {
+    if (req.params.service == 'googledrive') {
+        console.log('List from google drive');
+        gdrive.listFiles(req.params.user);
+    }
+});
+
+app.get('/delete/:file/:service/:user', function (req, res) {
+
+});
+
+app.get('/download/:file/:service/:user', function (req, res) {
+
+});
+
+app.post('/upload/:service/:user', function (req, res) {
+
+});
+
+app.get('/move/:file/:fromservice/:fromuser/:toservice/:touser', function (req, res) {
+
 });
