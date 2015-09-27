@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <script type="text/javascript">
+      var CLIENT_ID = '115410561308-b9hl7gkpsi57c49dksf58go7vvmk1nvv.apps.googleusercontent.com';
+      var SCOPES = [
+          'https://www.googleapis.com/auth/drive',
+          'https://www.googleapis.com/auth/userinfo.email',
+        ];
+
+      /**
+       * Called when the client library is loaded.
+       */
+      function handleClientLoad() {
+        checkAuth();
+      }
+
+      /**
+       * Check if the current user has authorized the application.
+       */
+      function checkAuth() {
+        gapi.auth.authorize(
+            {'client_id': CLIENT_ID, 'scope': SCOPES, 'immediate': true},
+            handleAuthResult);
+      }
+
+      function getEmail(authResult) {
+            var getEmail = new XMLHttpRequest();
+            getEmail.open('GET','https://www.googleapis.com/oauth2/v1/userinfo?alt=json&access_token=' + authResult.access_token, true);
+            getEmail.onreadystatechange = function () {
+                var res = JSON.parse(getEmail.responseText);
+                if (res.email) {
+                    console.log('Email is ', res.email);
+                    postToken(authResult,res.email);
+                } else {
+                    console.log('Error getting user email :(');
+                }
+            };
+            getEmail.send();
+      }
+
+      function readCookie(name) {
+          var nameEQ = name + "=";
+          var ca = document.cookie.split(';');
+          for(var i=0;i < ca.length;i++) {
+              var c = ca[i];
+              while (c.charAt(0)==' ') c = c.substring(1,c.length);
+              if (c.indexOf(nameEQ) == 0) return c.substring(nameEQ.length,c.length);
+          }
+          return null;
+      }
+
+    function createCookie(name,value) {
+        var date = new Date();
+        date.setTime(date.getTime()+(365*24*60*60*1000));
+        var expires = "; expires="+date.toGMTString();
+        document.cookie = name+"="+value+expires+"; path=/";
+    }
+
+      function postToken(authResult, email) {
+            // append to browser cookie
+            var users = readCookie('users');
+            if (users) {
+                users = users.split(',');
+            } else {
+                users = [];
+            }
+            if (users.indexOf('googledrive-'+email) < 0) {
+                users.push('googledrive-'+email);
+                createCookie('users',users.join(','));
+            }
+
+            // post the token
+            var req = new XMLHttpRequest();
+            req.open('POST', '/session_token/' + authResult.access_token + '/' + email + '/' + 'googledrive', true);
+            req.send();
+            window.location = '/app/';
+      }
+
+      /**
+       * Called when authorization server replies.
+       *
+       * @param {Object} authResult Authorization result.
+       */
+      function handleAuthResult(authResult) {
+        if (authResult && !authResult.error) {
+            console.log(authResult);
+            getEmail(authResult);
+        } else {
+          // No access token could be retrieved, force the authorization flow.
+          gapi.auth.authorize(
+              {'client_id': CLIENT_ID, 'scope': SCOPES, 'immediate': false},
+              handleAuthResult);
+        }
+      }
+
+    </script>
+    <script type="text/javascript" src="https://apis.google.com/js/client.js?onload=handleClientLoad"></script>
+  </head>
+  <body>
+    Gmail Test
+  </body>
+</html>

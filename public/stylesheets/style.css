@@ -21,6 +21,9 @@ body {
 	-moz-transform: translateX(-50%);
 	border-radius: 100%;
 	z-index: 10;
+	background-image: url('../recursive_icon.svg');
+	background-size: 114%;
+	border: 1px solid black;
 }
 
 .new {
@@ -64,6 +67,13 @@ body {
     /*-webkit-transform: translate(-50%,0);
     -ms-transform: translate(-50%,0);
     transform: translate(-50%,0);*/
+    overflow: scroll;
+    transform: translateX(-95%);
+	-webkit-transform: translateX(-95%);
+	-moz-transform: translateX(-95%);
+	transition: all .2s cubic-bezier(0.63, 0.64, 0.3, 1);
+  -webkit-transition: all .2s cubic-bezier(0.63, 0.64, 0.3, 1);
+  -moz-transition: all .2s cubic-bezier(0.63, 0.64, 0.3, 1)
 }
 
 .box .container {
@@ -79,6 +89,24 @@ body {
     overflow: scroll;
     box-sizing: border-box;
     z-index: 2;
+    transform: translateX(95%);
+	-webkit-transform: translateX(95%);
+	-moz-transform: translateX(95%);
+	transition: all .2s cubic-bezier(0.63, 0.64, 0.3, 1);
+  -webkit-transition: all .2s cubic-bezier(0.63, 0.64, 0.3, 1);
+  -moz-transition: all .2s cubic-bezier(0.63, 0.64, 0.3, 1)
+}
+
+.box.right {
+	transform: translateX(95%);
+	-webkit-transform: translateX(95%);
+	-moz-transform: translateX(95%);
+}
+
+.box.right .container {
+	transform: translateX(-95%);
+	-webkit-transform: translateX(-95%);
+	-moz-transform: translateX(-95%);
 }
 
 .drives {
@@ -151,6 +179,25 @@ body {
 	bottom: 10%;
 	left: 10%;
 	opacity: 0;
+}
+
+.box.show, .box.show .container {
+	transform: translateX(0);
+	-webkit-transform: translateX(0);
+	-moz-transform: translateX(0);
+}
+
+.glyphicons {
+	float: right;
+	margin: 10px;
+	z-index: 3;
+	position: relative;
+}
+
+.glyph {
+	height: 24px;
+	width: 20px;
+	margin-left: 7px;
 }
 
 @media only screen and (max-width: 1024px), only screen and (max-width: 1024px) and (-webkit-min-device-pixel-ratio: 3){

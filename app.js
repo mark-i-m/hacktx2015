@@ -10,6 +10,9 @@ var app = module.exports = express.createServer();
 var gdrive = require('./googledrive.js');
 var dbox = require('./dropbox.js');
 
+// Database
+var db = require('./db.js');
+
 /**
  * Configuration
  */
@@ -39,7 +42,7 @@ app.get('/app', function (req, res) {
 app.get('/login/:to', function (req, res) {
     if (req.params.to == 'googledrive') {
         console.log('Login to google drive');
-        gdrive.login(res);
+        res.redirect('/app/googledrive.html');
     }
     if (req.params.to == 'dropbox') {
         console.log('Login to Dropbox');
@@ -49,10 +52,14 @@ app.get('/login/:to', function (req, res) {
     }
 });
 
-app.get('/oauth/:service', function (req, res) {
+app.post('/session_token/:token/:user/:service', function (req, res) {
+    db.saveTokenTriple(req.params.token, req.params.user, req.params.service);
+});
+
+app.get('/list/:service/:user', function (req, res) {
     if (req.params.service == 'googledrive') {
-        console.log('Received OAuth2 response with code ', req.query.code);
-        gdrive.getToken(req.query.code);
+        console.log('List from google drive');
+        db.getToken(req.params.user, gdrive.listFiles, res);
     }
     else  {
         console.log(req.query.code);
@@ -60,25 +67,26 @@ app.get('/oauth/:service', function (req, res) {
     }
 });
 
+
 app.get('/list/:from', function (req, res) {
     
     if(req.params.from == 'dropbox')
         dbox.list('d', res);
 });
 
-app.get('/delete/:file/:from', function (req, res) {
+app.get('/delete/:file/:service/:user', function (req, res) {
+
 
 });
 
-app.get('/download/:file/:from', function (req, res) {
+app.get('/download/:file/:service/:user', function (req, res) {
 
 });
 
-app.post('/upload/:to', function (req, res) {
+app.post('/upload/:service/:user', function (req, res) {
 
 });
 
-app.get('/move/:file/:from/:to', function (req, res) {
-    //console.log(req.params);
-    //console.log(req.query);
+app.get('/move/:file/:fromservice/:fromuser/:toservice/:touser', function (req, res) {
+
 });
