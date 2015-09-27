@@ -50,7 +50,7 @@ app.get('/login/:to', function (req, res) {
         console.log('Login to Dropbox');
         //dbox.getAuthCode(res);
         //dbox.sendToAuthPage();
-        res.redirect('/index');
+        res.redirect('/app/');
     }
 });
 

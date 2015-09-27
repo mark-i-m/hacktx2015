@@ -89,17 +89,9 @@
 	// 	})
 	// })
 	$('body').on('mousedown', '.item', function() {
-<<<<<<< HEAD
 		//var clone = $(this).clone();
 		//$('body').append(clone)
 		$(this).draggabilly({
-	  
-=======
-		var clone = $(this).clone();
-		$('body').append(clone)
-		$(clone).draggabilly({
-
->>>>>>> 26a2b7219b5dedcfd176f4955299bc791630c721
 		})
 	});
 
@@ -120,11 +112,6 @@
 				box += '<div class="drive" style="background: #' + drives[d].color + '"><span class="title">'+ drives[d].name +'</span><img class="icon" src="../'+ drives[d].icon +'"></span><a href="'+ drives[d].url +'?'+ Date() +'"></div>';
 			box += '</div>'
 		} else {
-<<<<<<< HEAD
-			console.log('cookie');
-=======
-            console.log(cookie);
->>>>>>> 26a2b7219b5dedcfd176f4955299bc791630c721
 			listFiles(cookie.split('-'));
 		}
 		$("body").prepend((box = $(box + '</div></div>')));

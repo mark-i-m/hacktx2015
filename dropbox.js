@@ -1,5 +1,3 @@
-// TODO
-
 var fs = require('fs');
 var readline = require('readline');
 var https = require('https');
