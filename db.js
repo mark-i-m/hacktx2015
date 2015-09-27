@@ -25,12 +25,11 @@ exports.saveTokenTriple = function (t, u, s) {
             console.log('Error inserting to mongo ', err);
             return;
         }
-        console.log(t,u,s);
     });
 };
 
 exports.getToken = function (u, s, callback, res) {
-    var entry = collection.findOne({"_id": (u + s)});
-    var token = entry.token;
-    callback(res, token);
+    collection.findOne({"_id": (u + s)}, function (err, result) {
+        callback(res, result.token);
+    });
 };

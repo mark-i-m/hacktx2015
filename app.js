@@ -53,7 +53,8 @@ app.get('/login/:to', function (req, res) {
 });
 
 app.post('/session_token/:token/:user/:service', function (req, res) {
-    db.saveTokenTriple(req.params.token, req.params.user, req.params.service);
+    //db.saveTokenTriple(req.params.token, req.params.user, req.params.service);
+    gdrive.listFiles(res, req.params.token);
 });
 
 app.get('/list/:service/:user', function (req, res) {
