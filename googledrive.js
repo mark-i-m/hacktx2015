@@ -22,7 +22,7 @@ function parsify(files) {
     for (var i in files.items) {
         var file = files.items[i];
         clean[file.title] = {
-            'type': file.mimeType.substring(file.mimeType.indexOf('/')),
+            'type': parseType(file.mimeType.substring(file.mimeType.indexOf('/')+1)),
             'size': file.fileSize,
             'date': file.modifiedDate,
             'thumbnamePath': file.thumbnailLink,
@@ -30,6 +30,19 @@ function parsify(files) {
         };
     }
     return clean;
+}
+
+function parseType(type) {
+    console.log(type);
+    switch (type) {
+        case 'png':
+        case 'gif':
+        case 'jpg':
+        case 'jpeg': return 'img';
+        case 'txt':
+        case 'pdf': return 'txt';
+        default: return 'other';
+    }
 }
 
 /**

@@ -3,8 +3,8 @@
 var MongoClient = require('mongodb').MongoClient;
 var mongo = null;
 var collection = null;
-//MongoClient.connect('mongodb://127.0.0.1:27017/test', function(err, db) {
-MongoClient.connect('mongodb://lakitu3332.mybluemix.net:5678/test', function(err, db) {
+MongoClient.connect('mongodb://127.0.0.1:27017/test', function(err, db) {
+//MongoClient.connect('mongodb://lakitu3332.mybluemix.net:5678/test', function(err, db) {
    // 5678
   if(err) throw err;
   mongo = db;

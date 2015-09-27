@@ -110,7 +110,7 @@
 		if(!cookie){
 			box += '<div class="drives">';
 			for(var d in drives)
-				box += '<div class="drive" style="background: #' + drives[d].color + '"><span class="title">'+ drives[d].name +'</span><img class="icon" src="../'+ drives[d].icon +'"></span><a href="/login/'+ drives[d].url +'?'+ Date() +'"></div>';
+				box += '<div class="drive" style="background: #' + drives[d].color + '"><span class="title">'+ drives[d].name +'</span><img class="icon" src="../'+ drives[d].icon +'"></span><a href="'+ drives[d].url +'?'+ Date() +'"></div>';
 			box += '</div>'
 		} else {
             console.log(cookie);
