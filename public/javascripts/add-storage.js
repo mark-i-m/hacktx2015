@@ -2,7 +2,7 @@ var drives = {
 	"GD": { "name" : "Google Drive", "color" : "F44336", "url" : "googledrive", "icon": "GD.png"},
 	"OD": { "name" : "One Drive", "color" : "094AB2", "url" : "onedrive", "icon": "OD.png"},
 	"DB": { "name" : "Dropbox", "color" : "007EE5", "url" : "dropbox", "icon": "DB.png"}
-}, box;
+}, box, date = new Date();
 
 $(window).ready(function() {
 	newBox();
@@ -39,27 +39,27 @@ var json = {
 
 // allows for storage and files to be displayed when clicking on a panel
 function enableDisplay() {
-	$('.drive').click(function() {
-		var storageType = $(this).text().replace(/\s/g, '');;
+	$('.drive').click(function(e) {
+		e.preventDefault();
+		var storageType = $(this).text().replace(/\s/g, '');
 		// console.log(storageType);
 		var color = $(this).css('background-color');
 		// $.get('/', function(data) {
 		// 	listFiles(data);
 		// });
-		//listFiles(json, color, storageType);
+		listFiles(json, color, storageType);
 	});
 }
 
 function listFiles(json, color, storageType) {
 	//$(".drives").css("display", "none");
-
 	box.append('<div class="background" style="background:' + color + '"></div>');
 	grid = '<div class="container" data-storage="' + storageType + '"><div class="grid">';
 	for(var f in json) {
 		// grid += '<div class="item"><div class="background"></div><span class="title">' + f + '</span></div>';
 		grid += '<div class="item"><div class="glyphicons"><img class="glyph download" src="../download.png"><img class="glyph bin" src="../bin.png"></div><img class="icon" src="../' + json[f].type + '.svg"><div class="background"></div><span class="title">' + f + '</span></div>';
 	}
-	$('.box').append((grid = $(grid + '</div></div>')));
+	box.append((grid = $(grid + '</div></div>')));
 	$.Velocity.hook(box.find('.background'), "translateY", "100%");
 	box.find('.drives').velocity({scale: .2}, 400, "easeIn");
 	box.find('.background').velocity({translateY: 0}, 400, "easeIn", function() {
@@ -82,6 +82,10 @@ function listFiles(json, color, storageType) {
 	enableDelete();
 }
 
+function updateTabs (current) {
+	
+}
+
 function newBox() {
 	$('.box').removeClass('show');
 	// if($('.drives'))
@@ -89,8 +93,8 @@ function newBox() {
 	
 	box = '<div class="box show"><div class="drives">';
 	for(var d in drives)
-		box += '<div class="drive" style="background: #' + drives[d].color + '"><span class="title">'+ drives[d].name +'</span><img class="icon" src="../'+ drives[d].icon +'"></span><a href="/login/'+ drives[d].url +'" target="_blank"></div>';
-	$("body").append((box = $(box + '</div></div>')));
+		box += '<div class="drive" style="background: #' + drives[d].color + '"><span class="title">'+ drives[d].name +'</span><img class="icon" src="../'+ drives[d].icon +'"></span><a href="/login/'+ drives[d].url +'?'+ Date() +'"></div>';
+	$("body").prepend((box = $(box + '</div></div>')));
 	$(box).find('.drive').each(function (e) {
 		var d = $(this);
 		$.Velocity.hook(d, "translateY", "50%");
