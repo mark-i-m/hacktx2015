@@ -14,7 +14,7 @@
 			$('.drive, .item').each(function() {
 				$(this).height($(this).width());
 			})
-		}).trigger('resize'); 
+		}).trigger('resize');
 	});
 
 	// allows for storage and files to be displayed when clicking on a panel
@@ -29,11 +29,12 @@
 
 	function listFiles(cookie) {
 		//$(".drives").css("display", "none");
-		var email = cookie[0],
-			type = cookie[1],
-			color = drives[type];
+		var email = cookie[1],
+			type = cookie[0],
+			color = drives[type].color;
+        console.log(color);
 		$.get('/list/' + type + '/' + email, function(data) {
-			box.find('.container').append('<div class="background" style="background:' + color + '"></div>')
+			box.find('.container').append('<div class="background" style="background:#' + color + '"></div>')
 			grid = '<div class="grid" data-storage="' + type + '">';
 			for(var f in data) {
 				// grid += '<div class="item"><div class="background"></div><span class="title">' + f + '</span></div>';
@@ -64,7 +65,7 @@
 	}
 
 	function updateTabs (box) {
-		var current = box.index(), 
+		var current = box.index(),
 			length = $('.box').length;
 		//$('.box').removeClass('show');
 
@@ -88,10 +89,17 @@
 	// 	})
 	// })
 	$('body').on('mousedown', '.item', function() {
+<<<<<<< HEAD
 		//var clone = $(this).clone();
 		//$('body').append(clone)
 		$(this).draggabilly({
 	  
+=======
+		var clone = $(this).clone();
+		$('body').append(clone)
+		$(clone).draggabilly({
+
+>>>>>>> 26a2b7219b5dedcfd176f4955299bc791630c721
 		})
 	});
 
@@ -112,7 +120,11 @@
 				box += '<div class="drive" style="background: #' + drives[d].color + '"><span class="title">'+ drives[d].name +'</span><img class="icon" src="../'+ drives[d].icon +'"></span><a href="/login/'+ drives[d].url +'?'+ Date() +'"></div>';
 			box += '</div>'
 		} else {
+<<<<<<< HEAD
 			console.log('cookie');
+=======
+            console.log(cookie);
+>>>>>>> 26a2b7219b5dedcfd176f4955299bc791630c721
 			listFiles(cookie.split('-'));
 		}
 		$("body").prepend((box = $(box + '</div></div>')));
@@ -144,9 +156,11 @@
 	function checkCookies() {
 		var users = readCookie('users');
 		console.log(users);
-		if(users)
-			for(var c in users.split(','))
-				newBox(c);
+		if(users) {
+            users = users.split(',');
+			for(var c in users)
+				newBox(users[c]);
+        }
 		else newBox();
 	}
 });
