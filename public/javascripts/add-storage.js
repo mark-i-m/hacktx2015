@@ -40,14 +40,14 @@ var json = {
 // allows for storage and files to be displayed when clicking on a panel
 function enableDisplay() {
 	$('.drive').click(function(e) {
-		e.preventDefault();
+		//e.preventDefault();
 		var storageType = $(this).text().replace(/\s/g, '');
 		// console.log(storageType);
 		var color = $(this).css('background-color');
 		// $.get('/', function(data) {
 		// 	listFiles(data);
 		// });
-		listFiles(json, color, storageType);
+		//listFiles(json, color, storageType);
 	});
 }
 
