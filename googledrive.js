@@ -25,6 +25,31 @@ function getOAuth2FromToken(token) {
 }
 
 /**
+ * {'cats.txt' : {
+ * type: 'txt',
+ * size: '100',
+ * date: '26 September 2015',
+ * thumbnailPath: '',
+ * iconPath: '',
+ * },
+ * }
+ */
+function parsify(files) {
+    var clean = {};
+    for (var file in files) {
+        clean[file.title] = {
+            'type': file.mimeType.substring(file.mimeType.indexOf('/')),
+            'size': file.fileSize,
+            'date': file.modifiedDate,
+            'thumbnamePath': file.thumbnailLink,
+            'iconPath': file.iconLink,
+        };
+    }
+    console.log(clean);
+    return clean;
+}
+
+/**
  * List files
  */
 exports.listFiles = function (res, token) {
@@ -39,7 +64,7 @@ exports.listFiles = function (res, token) {
             return;
         }
         var files = response.items;
-        res.send(JSON.stringify(files));
+        res.send(JSON.stringify(parsify(files)));
     });
 }
 
