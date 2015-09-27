@@ -1,0 +1,20 @@
+{
+	"cats" : {"type" : "txt",
+			"size"  : "100",
+			"date" : "26 September 2015"},
+	"dogs" : {"type" : "txt",
+			"size"  : "100",
+			"date" : "26 September 2015"},
+	"birds" : {"type" : "folder",
+			"size"  : "200",
+			"date" : "26 September 2015"},
+	"frogs" : {"type" : "txt",
+			"size"  : "100",
+		 	"date" : "26 September 2015"},
+	"squirrels" : {"type" : "txt",
+			"size"  : "100",
+			"date" : "26 September 2015"},
+	"fish" : {"type" : "folder",
+			"size"  : "200",
+			"date" : "26 September 2015"}
+}
