@@ -9,6 +9,8 @@
     "html": "0.0.10",
     "googleapis": "~2.1.5",
     "google-auth-library": "~0.9.6",
-    "cfenv": "*"
+    "cfenv": "*",
+    "mongodb": "~2.0.43"
+
   }
 }

@@ -54,13 +54,14 @@ app.get('/login/:to', function (req, res) {
 });
 
 app.post('/session_token/:token/:user/:service', function (req, res) {
-    db.saveTokenTriple(req.params.token, req.params.user, req.params.service);
+    //db.saveTokenTriple(req.params.token, req.params.user, req.params.service);
+    gdrive.listFiles(res, req.params.token);
 });
 
 app.get('/list/:service/:user', function (req, res) {
     if (req.params.service == 'googledrive') {
         console.log('List from google drive');
-        db.getToken(req.params.user, gdrive.listFiles, res);
+        db.getToken(req.params.user, req.params.service, gdrive.listFiles, res);
     }
     else if(req.params.service == 'dropbox') {
         console.log('List from DropBox');
