@@ -89,7 +89,7 @@ function newBox() {
 	
 	box = '<div class="box show"><div class="drives">';
 	for(var d in drives)
-		box += '<div class="drive" style="background: #' + drives[d].color + '"><span class="title">'+ drives[d].name +'</span><img class="icon" src="../'+ drives[d].icon +'"></span><a href="login/'+ drives[d].url +'" target="_blank"></div>';
+		box += '<div class="drive" style="background: #' + drives[d].color + '"><span class="title">'+ drives[d].name +'</span><img class="icon" src="../'+ drives[d].icon +'"></span><a href="/login/'+ drives[d].url +'" target="_blank"></div>';
 	$("body").append((box = $(box + '</div></div>')));
 	$(box).find('.drive').each(function (e) {
 		var d = $(this);
