@@ -30,7 +30,7 @@
 	function listFiles(cookie) {
 		//$(".drives").css("display", "none");
 		var email = cookie[0],
-			type = cooke[1],
+			type = cookie[1],
 			color = drives[type];
 		$.get('/list/' + type + '/' + email, function(data) {
 			box.find('.container').append('<div class="background" style="background:' + color + '"></div>')
