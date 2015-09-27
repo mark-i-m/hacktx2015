@@ -1,11 +1,14 @@
 # hacktx2015
 HackTX-
 
+
+Sample credentials
+------------------
 Google Drive:
 hacktx015@gmail.com
 hacktx
 
-Dropbox
+Dropbox:
 hacktx015@gmail.com
 brandondang
  
@@ -18,3 +21,7 @@ For each of the following operations, make a post request to the following addre
 - *download* /download/:file/:from
 - *upload* /upload/:to
 - *move* /move/:file/:from/:to
+
+Icon credits
+------------
+http://www.flaticon.com/authors/freepik
