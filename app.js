@@ -41,6 +41,12 @@ app.get('/login/:to', function (req, res) {
         console.log('Login to google drive');
         gdrive.login(res);
     }
+    if (req.params.to == 'dropbox') {
+        console.log('Login to Dropbox');
+        //dbox.getAuthCode(res);
+        //dbox.sendToAuthPage();
+        res.redirect('/index');
+    }
 });
 
 app.get('/oauth/:service', function (req, res) {
@@ -48,10 +54,16 @@ app.get('/oauth/:service', function (req, res) {
         console.log('Received OAuth2 response with code ', req.query.code);
         gdrive.getToken(req.query.code);
     }
+    else  {
+        console.log(req.query.code);
+        dbox.getAuthToken(req.query.code, res);
+    }
 });
 
 app.get('/list/:from', function (req, res) {
-
+    
+    if(req.params.from == 'dropbox')
+        dbox.list('d', res);
 });
 
 app.get('/delete/:file/:from', function (req, res) {
