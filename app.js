@@ -39,14 +39,7 @@ app.get('/app', function (req, res) {
 app.get('/login/:to', function (req, res) {
     if (req.params.to == 'googledrive') {
         console.log('Login to google drive');
-        gdrive.login(res);
-    }
-});
-
-app.get('/oauth/:service', function (req, res) {
-    if (req.params.service == 'googledrive') {
-        console.log('Received OAuth2 response with code ', req.query.code);
-        gdrive.getToken(req.query.code);
+        res.redirect('/app/googledrive.html');
     }
 });
 
@@ -69,4 +62,8 @@ app.post('/upload/:to', function (req, res) {
 app.get('/move/:file/:from/:to', function (req, res) {
     //console.log(req.params);
     //console.log(req.query);
+});
+
+app.post('/session_token/:token/:user/:service', function (req, res) {
+    console.log(req.params.token, req.params.user, req.params.service);
 });
