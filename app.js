@@ -1,13 +1,18 @@
-
 /**
  * Module dependencies.
  */
 
+// Node express
 var express = require('express');
 var app = module.exports = express.createServer();
 
-// Configuration
+// Cloud
+var gdrive = require('./googledrive.js');
+var dbox = require('./dropbox.js');
 
+/**
+ * Configuration
+ */
 app.configure(function(){
   app.use(express.static(__dirname + '/public'));
 });
@@ -24,13 +29,44 @@ app.listen(3000, function(){
   console.log("Express server listening on port %d in %s mode", app.address().port, app.settings.env);
 });
 
-// Add request handling here
-
+/**
+ * Request handling and routing
+ */
 app.get('/app', function (req, res) {
     res.render('index.html');
 });
 
-app.post('/app/:id', function (req, res) {
+app.get('/login/:to', function (req, res) {
+    if (req.params.to == 'googledrive') {
+        console.log('Login to google drive');
+        gdrive.login(res);
+    }
+});
+
+app.get('/oauth/:service', function (req, res) {
+    if (req.params.service == 'googledrive') {
+        console.log('Received OAuth2 response with code ', req.query.code);
+        gdrive.getToken(req.query.code);
+    }
+});
+
+app.get('/list/:from', function (req, res) {
+
+});
+
+app.get('/delete/:file/:from', function (req, res) {
+
+});
+
+app.get('/download/:file/:from', function (req, res) {
+
+});
+
+app.post('/upload/:to', function (req, res) {
+
+});
+
+app.get('/move/:file/:from/:to', function (req, res) {
     //console.log(req.params);
     //console.log(req.query);
-} );
+});
