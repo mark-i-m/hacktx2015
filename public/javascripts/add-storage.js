@@ -29,15 +29,15 @@
 
 	function listFiles(cookie) {
 		//$(".drives").css("display", "none");
-		$.get('/list/' + storageType, function(data) {
-			var email = cookie[0],
-				type = cooke[1],
-				color = drives[type];
+		var email = cookie[0],
+			type = cooke[1],
+			color = drives[type];
+		$.get('/list/' + type + '/' + email, function(data) {
 			box.find('.container').append('<div class="background" style="background:' + color + '"></div>')
 			grid = '<div class="grid" data-storage="' + type + '">';
-			for(var f in json) {
+			for(var f in data) {
 				// grid += '<div class="item"><div class="background"></div><span class="title">' + f + '</span></div>';
-				grid += '<div class="item"><div class="glyphicons"><img class="glyph download" src="../download.png"><img class="glyph bin" src="../bin.png"></div><img class="icon" src="../' + json[f].type + '.svg"><div class="background"></div><span class="title">' + f + '</span></div>';
+				grid += '<div class="item"><div class="glyphicons"><img class="glyph download" src="../download.png"><img class="glyph bin" src="../bin.png"></div><img class="icon" src="../' + data[f].type + '.svg"><div class="background"></div><span class="title">' + f + '</span></div>';
 			}
 			box.find('.container').append((grid = $(grid + '</div>')));
 			$.Velocity.hook(box.find('.background'), "translateY", "100%");
