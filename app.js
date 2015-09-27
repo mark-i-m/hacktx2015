@@ -12,7 +12,8 @@ var dbox = require('./dropbox.js');
 
 // Database
 var db = require('./db.js');
-
+var envMod = require('cfenv');
+var appEnv = envMod.getAppEnv();
 /**
  * Configuration
  */
@@ -28,7 +29,7 @@ app.configure('production', function(){
   app.use(express.errorHandler());
 });
 
-app.listen(3000, function(){
+app.listen(appEnv.port, function(){
   console.log("Express server listening on port %d in %s mode", app.address().port, app.settings.env);
 });
 
