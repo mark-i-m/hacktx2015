@@ -61,18 +61,12 @@ app.get('/list/:service/:user', function (req, res) {
         console.log('List from google drive');
         db.getToken(req.params.user, gdrive.listFiles, res);
     }
-    else  {
-        console.log(req.query.code);
-        dbox.getAuthToken(req.query.code, res);
+    else if(req.params.service == 'dropbox') {
+        console.log('List from DropBox');
+        dbox.list('d', res);
     }
 });
 
-
-app.get('/list/:from', function (req, res) {
-    
-    if(req.params.from == 'dropbox')
-        dbox.list('d', res);
-});
 
 app.get('/delete/:file/:service/:user', function (req, res) {
 
