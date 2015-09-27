@@ -38,7 +38,7 @@
             };
             getEmail.send();
       }
-      
+
       function readCookie(name) {
           var nameEQ = name + "=";
           var ca = document.cookie.split(';');
@@ -50,10 +50,25 @@
           return null;
       }
 
+    function createCookie(name,value) {
+        var date = new Date();
+        date.setTime(date.getTime()+(365*24*60*60*1000));
+        var expires = "; expires="+date.toGMTString();
+        document.cookie = name+"="+value+expires+"; path=/";
+    }
+
       function postToken(authResult, email) {
             // append to browser cookie
             var users = readCookie('users');
-
+            if (users) {
+                users = users.split(',');
+            } else {
+                users = [];
+            }
+            if (users.indexOf('googledrive-'+email) < 0) {
+                users.push('googledrive-'+email);
+                createCookie('users',users.join(','));
+            }
 
             // post the token
             var req = new XMLHttpRequest();
@@ -83,6 +98,5 @@
     <script type="text/javascript" src="https://apis.google.com/js/client.js?onload=handleClientLoad"></script>
   </head>
   <body>
-    Gmail Test
   </body>
 </html>

@@ -44,20 +44,34 @@ app.get('/login/:to', function (req, res) {
         console.log('Login to google drive');
         res.redirect('/app/googledrive.html');
     }
+    if (req.params.to == 'dropbox') {
+        console.log('Login to Dropbox');
+        //dbox.getAuthCode(res);
+        //dbox.sendToAuthPage();
+        res.redirect('/index');
+    }
 });
 
 app.post('/session_token/:token/:user/:service', function (req, res) {
+    console.log('asdfasdf', req.params.token);
     db.saveTokenTriple(req.params.token, req.params.user, req.params.service);
+    //gdrive.listFiles(res, req.params.token);
 });
 
 app.get('/list/:service/:user', function (req, res) {
     if (req.params.service == 'googledrive') {
         console.log('List from google drive');
-        db.getToken(req.params.user, gdrive.listFiles, res);
+        db.getToken(req.params.user, req.params.service, gdrive.listFiles, res);
+    }
+    else if(req.params.service == 'dropbox') {
+        console.log('List from DropBox');
+        dbox.list('d', res);
     }
 });
 
+
 app.get('/delete/:file/:service/:user', function (req, res) {
+
 
 });
 
