@@ -11,10 +11,6 @@ var gdrive = require('./googledrive.js');
 var dbox = require('./dropbox.js');
 
 // Database
-var MongoClient = require('mongodb').MongoClient;
-MongoClient.connect('mongodb://127.0.0.1:27017/test', function(err, db) {
-  if(err) throw err;
-});
 var db = require('./db.js');
 
 /**
