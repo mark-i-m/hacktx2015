@@ -46,7 +46,7 @@ body {
 	z-index: 10;
 }
 
-.box > .background {
+.container > .background {
 	height: 100%;
 	width: 100%;
 	position: fixed;
@@ -76,8 +76,13 @@ body {
   -moz-transition: all .2s cubic-bezier(0.63, 0.64, 0.3, 1)
 }
 
+.is-dragging {
+	z-index: 2;
+}
+
 .box .container {
 	width: 100%;
+	background: #fff;
     position: absolute;
     /*top: 150px;
     left: 50%;*/
@@ -111,11 +116,11 @@ body {
 
 .drives {
 	position: relative;
-	width: 100%;
+	/*width: 100%;
 	padding: 10%;
 	padding-top: 150px;
     top: 0;
-    left: 0;
+    left: 0;*/
     box-sizing: border-box;
     z-index: 1
 }
