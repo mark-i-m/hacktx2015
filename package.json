@@ -1,5 +1,5 @@
 {
-  "name": "application-name",
+  "name": "lakitu3332",
   "version": "0.0.1",
   "private": true,
   "dependencies": {
@@ -10,7 +10,9 @@
     "googleapis": "~2.1.5",
     "google-auth-library": "~0.9.6",
     "cfenv": "*",
+    
     "mongodb": "~2.0.43"
+    
 
   }
 }

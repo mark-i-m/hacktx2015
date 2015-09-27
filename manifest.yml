@@ -1,5 +1,5 @@
 applications:
 - name: lakitu3332
-  memory: 256M
+  memory: 1024M
   command: node app.js
   domain: mybluemix.net
